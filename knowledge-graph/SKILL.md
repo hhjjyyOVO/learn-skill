@@ -17,6 +17,29 @@ argument-hint: <笔记目录路径> [教材skill名称|教材文档路径]
 
 从任意起点（笔记 / PDF 教材 / 已有 skill）出发，构建结构化知识点图谱。自动识别学科类型，适配输出格式。最终产物是 Obsidian 兼容的三层知识网络。
 
+## 两种使用方式
+
+### 独立使用
+
+直接调用，不依赖 learn：
+
+```
+/knowledge-graph 笔记目录                        # 纯笔记 → 图谱（无教材核对）
+/knowledge-graph 笔记目录 教材.pdf                # 笔记+PDF → 自动调 book-to-skill → 图谱
+/knowledge-graph 笔记目录 skill名                 # 笔记+已有 skill → 图谱
+/knowledge-graph --extract-only 教材.pdf          # 仅提取教材为 skill
+/knowledge-graph 笔记目录 new-skill --merge       # 补充新内容到已有图谱
+```
+
+### 被 learn 编排调用
+
+```
+learn 在 Step 3b 自动调用 knowledge-graph，传入笔记目录 + 教材 skill slug
+→ 无需用户手动指定参数
+```
+
+两种方式**完全等价**——learn 只是帮你省掉了手动传参的步骤。
+
 ## 核心理念
 
 **原材料不限，输出物统一。** 无论手上是散乱的课堂笔记、PDF 教材、还是现成的 textbook skill——沿着同一条流水线变成三层可导航的知识网络：

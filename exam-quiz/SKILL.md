@@ -15,7 +15,35 @@ argument-hint: "[start | continue | review | score] (默认：start)"
 
 **不依赖具体学科。** 从知识点索引和试卷扫描中自动生成考题。轮次不限，每轮根据上一轮薄弱点自适应出题，持续到用户叫停或全部掌握。
 
-## 与其他 skill 的关系
+## 两种使用方式
+
+### 独立使用
+
+直接调用，不依赖 learn 或 knowledge-graph：
+
+```
+/exam-quiz start                           # 自动扫描目录 → 开始测验
+/exam-quiz start --scope "第1-5章"          # 限定章节范围
+/exam-quiz start --exam "期末试卷.pdf"      # 参考特定试卷风格
+/exam-quiz start --target 95               # 目标正确率 95%
+/exam-quiz continue                        # 继续上次未完成的轮次
+/exam-quiz review                          # 查看薄弱点汇总
+/exam-quiz score                           # 查看成绩统计
+```
+
+如果没有知识点索引，阶段0 会询问你提供范围——完全可以**零依赖**启动。
+
+### 被 learn 编排调用
+
+```
+learn 在 knowledge-graph 完成后询问 "要进行一轮自测吗？"
+  → 用户同意 → learn 调用 Skill("exam-quiz") 以 fresh 模式启动
+  → 用户拒绝 → learn 跳过测验，进入总结
+```
+
+两种方式**完全等价**——learn 只是帮你衔接了知识图谱到测验的过渡。
+
+## 在技能链中的位置
 
 ```
 learn 编排 → knowledge-graph 构建图谱 → exam-quiz 测验验证
