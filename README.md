@@ -100,19 +100,38 @@
 
 ## 安装
 
-将本仓库克隆到 Claude Code 的 skills 目录：
+仓库根目录的四个文件夹就是四个 skill。Claude Code 从 `~/.claude/skills/<skill-name>/SKILL.md` 发现 skill，所以只需要让这四个目录出现在那里即可。
+
+### 推荐方式：symlink（一次设置，git pull 即时更新）
 
 ```bash
-# Claude Code 全局 skills
-git clone https://github.com/your-org/learn_skill.git ~/.claude/skills/learn_skill/
+# 1. clone 到任意位置
+git clone https://github.com/your-org/learn_skill.git ~/learn_skill
 
-# 或者 Amp 全局 skills
-git clone https://github.com/your-org/learn_skill.git ~/.config/agents/skills/learn_skill/
+# 2. 把四个 skill 链接到 Claude Code skills 目录（一条命令）
+ln -s ~/learn_skill/{learn,book-to-skill,knowledge-graph,exam-quiz} ~/.claude/skills/
+```
+
+### 备选方式：直接复制
+
+```bash
+git clone https://github.com/your-org/learn_skill.git /tmp/learn_skill
+cp -r /tmp/learn_skill/{learn,book-to-skill,knowledge-graph,exam-quiz} ~/.claude/skills/
+rm -rf /tmp/learn_skill
+```
+
+### 验证
+
+```bash
+ls ~/.claude/skills/learn/SKILL.md          # 应该存在
+ls ~/.claude/skills/book-to-skill/SKILL.md  # 应该存在
+ls ~/.claude/skills/knowledge-graph/SKILL.md # 应该存在
+ls ~/.claude/skills/exam-quiz/SKILL.md      # 应该存在
 ```
 
 ### 依赖
 
-- **Claude Code** 或 **Amp**（支持 Skill 调用的 agent 环境）
+- **Claude Code**（支持 Skill 调用的 agent 环境）
 - **Python 3.10+**（仅 `book-to-skill` 的文档提取脚本需要）
 - Python 可选包：`pymupdf`（PDF）、`python-docx`（DOCX）、`ebooklib`（EPUB）、`beautifulsoup4`（HTML）——脚本会自动检测并提示安装
 
