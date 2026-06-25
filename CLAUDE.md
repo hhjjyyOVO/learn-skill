@@ -1,28 +1,43 @@
 # Learn Skill Suite — 学习流水线技能套件
 
-仓库根目录的四个文件夹即四个独立 skill——clone 后 symlink 到 `~/.claude/skills/` 即可使用。
+四个独立 skill 的集合仓库。每个子目录（`learn/`、`book-to-skill/`、`knowledge-graph/`、`exam-quiz/`）都是一个完整的 Claude Code skill。
 
-## 目录即 skill
+## 安装（给 Claude Code 执行）
 
-```
-learn_skill/
-├── learn/SKILL.md              ← 🚀 编排层 — 一键串联全流程
-├── book-to-skill/SKILL.md      ← 📖 原料层 — PDF/文档 → knowledge skill
-├── knowledge-graph/SKILL.md    ← 🗺️ 加工层 — 笔记+skill → 知识图谱
-├── exam-quiz/SKILL.md          ← ✍️ 检验层 — 图谱 → 递进测验
-├── README.md
-├── CLAUDE.md
-└── .gitignore
-```
-
-每个目录就是 Claude Code 的一个 skill（包含 `SKILL.md` + 辅助文件），可以被 Claude Code 直接加载。
-
-## 安装
+当用户提供本仓库链接要求安装时，按以下步骤执行：
 
 ```bash
-git clone <url> ~/learn_skill
-ln -s ~/learn_skill/{learn,book-to-skill,knowledge-graph,exam-quiz} ~/.claude/skills/
+# 1. 克隆仓库
+git clone <repo-url> /tmp/learn_skill
+
+# 2. 如果用户希望放在固定位置（推荐），先移动到 ~/
+cp -r /tmp/learn_skill ~/learn_skill
+
+# 3. 将四个 skill 目录链接到 Claude Code skills 路径
+ln -s ~/learn_skill/learn ~/.claude/skills/learn
+ln -s ~/learn_skill/book-to-skill ~/.claude/skills/book-to-skill
+ln -s ~/learn_skill/knowledge-graph ~/.claude/skills/knowledge-graph
+ln -s ~/learn_skill/exam-quiz ~/.claude/skills/exam-quiz
+
+# 4. 验证安装
+ls ~/.claude/skills/learn/SKILL.md
+ls ~/.claude/skills/book-to-skill/SKILL.md
+ls ~/.claude/skills/knowledge-graph/SKILL.md
+ls ~/.claude/skills/exam-quiz/SKILL.md
+
+# 5. 清理临时文件
+rm -rf /tmp/learn_skill
 ```
+
+安装完成后告知用户：
+- 四个 skill 已可用：`/learn`、`/book-to-skill`、`/knowledge-graph`、`/exam-quiz`
+- 以后升级：`cd ~/learn_skill && git pull`（symlink 使得更新即时生效）
+
+## 注意事项
+
+- **不能把整个仓库目录直接链接到 `~/.claude/skills/`**：Claude Code 只扫描 `~/.claude/skills/<name>/SKILL.md` 一层。直接链接仓库会导致 skill 嵌套在 `learn_skill/` 下而无法被发现。
+- 四个 skill 必须各自独立链接到 `~/.claude/skills/` 顶层。
+- 如果用户已有同名 skill，安装前先询问是否覆盖。
 
 ## 使用
 

@@ -100,33 +100,33 @@
 
 ## 安装
 
-仓库根目录的四个文件夹就是四个 skill。Claude Code 从 `~/.claude/skills/<skill-name>/SKILL.md` 发现 skill，所以只需要让这四个目录出现在那里即可。
+### 方式一：直接把仓库链接给 Claude Code
 
-### 推荐方式：symlink（一次设置，git pull 即时更新）
+把仓库链接发给 Claude Code，说"帮我安装"即可。仓库根目录的 `CLAUDE.md` 包含了 Claude 自动执行的安装步骤——clone → symlink → 验证，全程自动。
 
-```bash
-# 1. clone 到任意位置
-git clone https://github.com/your-org/learn_skill.git ~/learn_skill
+> 其实就是下面「方式二」那条命令的自动化。
 
-# 2. 把四个 skill 链接到 Claude Code skills 目录（一条命令）
-ln -s ~/learn_skill/{learn,book-to-skill,knowledge-graph,exam-quiz} ~/.claude/skills/
-```
+### 方式二：手动安装
 
-### 备选方式：直接复制
+仓库根目录的四个文件夹就是四个 skill。Claude Code 只扫描 `~/.claude/skills/<skill-name>/SKILL.md` 一层，所以**不能把整个仓库直接链接进去**——需要每个 skill 各自链接：
 
 ```bash
-git clone https://github.com/your-org/learn_skill.git /tmp/learn_skill
-cp -r /tmp/learn_skill/{learn,book-to-skill,knowledge-graph,exam-quiz} ~/.claude/skills/
-rm -rf /tmp/learn_skill
+git clone <url> ~/learn_skill
+ln -s ~/learn_skill/learn ~/.claude/skills/learn
+ln -s ~/learn_skill/book-to-skill ~/.claude/skills/book-to-skill
+ln -s ~/learn_skill/knowledge-graph ~/.claude/skills/knowledge-graph
+ln -s ~/learn_skill/exam-quiz ~/.claude/skills/exam-quiz
 ```
+
+之后 `cd ~/learn_skill && git pull` 即可更新，symlink 使得更新即时生效。
 
 ### 验证
 
 ```bash
-ls ~/.claude/skills/learn/SKILL.md          # 应该存在
-ls ~/.claude/skills/book-to-skill/SKILL.md  # 应该存在
-ls ~/.claude/skills/knowledge-graph/SKILL.md # 应该存在
-ls ~/.claude/skills/exam-quiz/SKILL.md      # 应该存在
+ls ~/.claude/skills/learn/SKILL.md
+ls ~/.claude/skills/book-to-skill/SKILL.md
+ls ~/.claude/skills/knowledge-graph/SKILL.md
+ls ~/.claude/skills/exam-quiz/SKILL.md
 ```
 
 ### 依赖
