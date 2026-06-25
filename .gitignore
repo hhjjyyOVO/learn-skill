@@ -1,0 +1,37 @@
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# 虚拟环境
+venv/
+.venv/
+env/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 临时文件
+*.tmp
+*.temp
+tempdir/
+book_skill_work/
+
+# OS
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# 输出产物（由 skill 运行时生成，不入库）
+知识点索引.md
+知识关系链.md
+复习记录*.md
+应用模式速查.md
